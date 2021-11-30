@@ -1,0 +1,42 @@
+version: '3.7'
+services:
+  # Service name.
+  postgres:
+    # Path where the Dockerfile is located and its name.
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    # Name that is assigned to the container.
+    container_name: postgres
+    # In the event of a fault it starts automatically.
+    restart: always
+    # Environment Variables.
+    environment:
+      POSTGRES_USER: "caramelo"
+      POSTGRES_PASSWORD: "caramelo"
+      POSTGRES_DB: "caramelo"
+      # Data persistence.
+      PGDATA: /var/lib/postgresql/pgdata
+      # Connection external : internal.
+    ports:
+      - 15432:5432
+    # Create the persistence of the data.
+    volumes:
+      - pgdata:/var/lib/postgresql/pgdata
+    # Indicates the network to connect to.
+    networks:
+      # Name of the network.
+      postgres_networks:
+        aliases:
+          - postgres_host
+
+# Confirmation of data persistence.
+volumes:
+  pgdata: {}
+
+# Networks to be configured with this container.
+networks:
+  postgres_networks:
+    name: postgres_net
+    driver: bridge
