@@ -34,9 +34,15 @@ Connection - Password: caramelo
 docker run -it --rm -d -p 5432:5432 -e POSTGRES_PASSWORD=admin --name container-postgresdb postgres
 
 <!-- Lift container pgadmin4. -->
-docker run -it --rm -d -p 5050:80 -e "PGADMIN_DEFAULT_EMAIL=name@example.com" -e "PGADMIN_DEFAULT_PASSWORD=admin" dpage/pgadmin4
+docker run -it --rm -d -p 5050:80 -e "PGADMIN_DEFAULT_EMAIL=name@example.com" -e "PGADMIN_DEFAULT_PASSWORD=admin" dpage/pgadmin4 --link container-postgresdb
 <!-- Access the pgadmin4 server. -->
 <!-- http://localhost:5050 -->
+<!-- Configuration add server in local pgadmin4. -->
+General - name: docker
+Connection - Host: container-postgresdb
+Connection - Port: 15432
+Connection - Username: caramelo
+Connection - Password: caramelo
 
 
 # Steps to communicate IMG docker with pgadmin4.
